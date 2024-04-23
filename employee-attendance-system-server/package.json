@@ -1,0 +1,36 @@
+{
+  "name": "employee-attendance-system-server",
+  "version": "1.0.0",
+  "description": "This Project is for Marking Attendance of Employees",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "node.js",
+    "express",
+    "login",
+    "registration",
+    "rest",
+    "api",
+    "jwt",
+    "authentication",
+    "authorization",
+    "mysql"
+  ],
+  "author": "Alex Anjalees - Software Developer",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.7.0",
+    "sequelize": "^6.35.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

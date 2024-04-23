@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <div class="card card-container">
+        <h2 class="text-center mb-4">Employee Attendance Management System</h2>
+        <img id="profile-img"
+          src="https://www.skoolbeep.com/blog/wp-content/uploads/2020/12/What-is-an-attendence-manangemnt-system.png"
+          class="profile-img-card" />
+        <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required
+                #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.errors }" />
+              <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
+                Username is required!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
+                minlength="6" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }" />
+              <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+                <div *ngIf="password.errors['required']">Password is required</div>
+                <div *ngIf="password.errors['minlength']">
+                  Password must be at least 6 characters
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-block">Login</button>
+            </div>
+            <div class="text-center">
+              <div *ngIf="!isLoggedIn">
+                Don't have an account?
+                <button class="btn btn-link" (click)="register()">SignUp</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger" role="alert">
+                Login failed: {{ errorMessage }}
+              </div>
+            </div>
+          </form>
+        </ng-container>
+        <ng-template #loggedInBlock>
+          <div class="alert alert-success">Logged in as {{ roles }}.</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

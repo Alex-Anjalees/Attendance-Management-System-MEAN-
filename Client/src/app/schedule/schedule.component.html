@@ -1,0 +1,102 @@
+<div class="container-fluid bg-white rounded shadow" style="margin-top: 1%; padding-bottom: 2%;">
+  <h1 style="font-weight: bold; text-align: center; padding-top: 2%;">Shift Details</h1>
+  <hr>
+  <div class="container mt-5 shift-form-container" *ngIf="showFormBoolean == true">
+    <h2> Add Shift Details Form</h2>
+    <div class="text-right" style="margin-top: -4%;">
+      <button class="btn btn-secondary" (click)="goBack()" title="Back">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+    </div>
+    <div style="margin-top: 5%;">
+      <form [formGroup]="shiftForm" (ngSubmit)="onSubmit()" class="custom-form">
+        <div class="mb-3" style="margin-top: 5%;">
+          <label for="shiftName" class="form-label">Shift Name:</label>
+          <input type="text" id="shiftName" class="form-control" formControlName="shiftName" required>
+        </div>
+        <div class="mb-3">
+          <label for="timeIn" class="form-label">Time In:</label>
+          <input type="time" id="timeIn" class="form-control" formControlName="timeIn" required>
+        </div>
+        <div class="mb-3">
+          <label for="timeOut" class="form-label">Time Out:</label>
+          <input type="time" id="timeOut" class="form-control" formControlName="timeOut" required>
+        </div>
+        <button type="submit" class="btn btn-primary" title="Add Shift">Submit</button>
+        <div *ngIf="showAlertMessage" class="alert alert-danger" style="margin-top: 1%;">
+          {{ message }}
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container mt-5 shift-form-container" *ngIf="showUpdateFormBoolean == true">
+    <h2> Update Shift Details Form</h2>
+    <div class="text-right" style="margin-top: -4%;">
+      <button class="btn btn-secondary" (click)="goBackUpdate()" title="Back">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+    </div>
+    <div style="margin-top: 5%;">
+      <form [formGroup]="shiftForm" (ngSubmit)="onSubmitUpdate()" class="custom-form">
+        <div class="mb-3">
+          <label for="shiftName" class="form-label">Shift Name:</label>
+          <input type="text" id="shiftName" class="form-control" formControlName="shiftName" required>
+        </div>
+        <div class="mb-3">
+          <label for="timeIn" class="form-label">Time In:</label>
+          <input type="time" id="timeIn" class="form-control" formControlName="timeIn" required>
+        </div>
+        <div class="mb-3">
+          <label for="timeOut" class="form-label">Time Out:</label>
+          <input type="time" id="timeOut" class="form-control" formControlName="timeOut" required>
+        </div>
+        <button type="submit" class="btn btn-primary" title="Update Shift">Update</button>
+        <div *ngIf="showAlertMessage" class="alert alert-danger" style="margin-top: 1%;">
+          {{ message }}
+        </div>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="isScheduleList == true">
+    <div *ngIf="showAlertMessage" class="alert alert-success" style="margin-top: 1%;">
+      {{ message }}
+    </div>
+    <div style="margin-bottom: 1%; text-align: right;" *ngIf="role === 'admin'">
+      <button type="button" class="btn btn-success" (click)="addForm()" title="Add Shift">+ Add New</button>
+    </div>
+    <table class="table table-hover table-bordered" *ngIf="shiftList">
+      <thead>
+        <tr>
+          <th scope="col">Sl.no</th>
+          <th scope="col">Shift</th>
+          <th scope="col">Time In</th>
+          <th scope="col">Time Out</th>
+          <th scope="col" *ngIf="role === 'admin'">Added On</th>
+          <th scope="col" *ngIf="role === 'admin'">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of shiftList | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; let i=index">
+          <th scope="row">{{ i+1 }}</th>
+          <td>{{ user.shift}}</td>
+          <td>{{ user.timeIn}}</td>
+          <td>{{ user.timeOut}}</td>
+          <td *ngIf="role === 'admin'">{{ user.addedOn | date:'yyyy-MM-dd' }}</td>
+          <td *ngIf="role === 'admin'">
+            <div class="btn-group">
+              <button class="btn btn-success mr-2" (click)="editShiftData(user)" title="Edit Shift">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn btn-danger" (click)="deleteShiftData(user.id)" title="Delete Shift">
+                <i class="fas fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-right" style="margin-top: 2%;">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+.today-column {
+  background-color: yellow;
+}
+
+body,
+html {
+  height: 70%;
+  margin: 220px;
+}
+
+.attendance-request {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.request-info {
+  margin-bottom: 10px;
+}
+
+.request-sentence {
+  color: #333;
+  font-weight: bold;
+}
+
+.username {
+  color: #007bff;
+}
+
+.date {
+  color: #28a745;
+}
+
+.department {
+  color: #17a2b8;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.attendance-table th, .attendance-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.attendance-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}

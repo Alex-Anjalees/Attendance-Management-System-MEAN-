@@ -1,0 +1,42 @@
+<div class="nav-items">
+  <div class="nav-item" *ngIf="role === 'admin' || role === 'user'" routerLink="dashboard"
+    [class.active]="isDashboardActive">
+    <fa-icon [icon]="faDashboard"></fa-icon>
+    <span>Dashboard</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'admin'" routerLink="user-list" [class.active]="isUserListActive">
+    <fa-icon [icon]="faLocation"></fa-icon>
+    <span>Employees</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'admin' || role === 'user'" routerLink="schedule"
+    [class.active]="isScheduleActive">
+    <fa-icon [icon]="faShop"></fa-icon>
+    <span>Schedule</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'admin'" routerLink="positions" [class.active]="isPositionsActive">
+    <fa-icon [icon]="faBox"></fa-icon>
+    <span>Positions</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'admin'" routerLink="attendance-sheet"
+    [class.active]="isAttendanceSheetActive">
+    <fa-icon [icon]="faMoneyBill"></fa-icon>
+    <span>Attendance Mark</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'admin'" routerLink="sheet-report" [class.active]="isSheetReportActive">
+    <fa-icon [icon]="faChartBar"></fa-icon>
+    <span>Sheet Report</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'admin' || role === 'user'" routerLink="attendance-log"
+    [class.active]="isAttendanceLogActive">
+    <fa-icon [icon]="faContactBook"></fa-icon>
+    <span>Attendance Logs</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'user'" routerLink="home" [class.active]="isHelpActive">
+    <fa-icon [icon]="faHand"></fa-icon>
+    <span>Help</span>
+  </div>
+  <div class="nav-item" *ngIf="role === 'user'" routerLink="user" [class.active]="isEmployeeFeedbackActive">
+    <fa-icon [icon]="faBox"></fa-icon>
+    <span>Employee Feedback</span>
+  </div>
+</div>

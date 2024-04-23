@@ -1,0 +1,40 @@
+.nav-items {
+  padding-top: 40px;
+  .nav-item {
+    padding: 25px 50px;
+    cursor: pointer;
+    @media only screen and (max-width: 1300px) {
+      padding: 25px 40px;
+    }
+    &:hover {
+      background-color: rgb(1, 38, 69);
+    }
+    fa-icon {
+      margin-right: 20px;
+      font-size: 22px;
+    }
+    span {
+      display: inline;
+      @media only screen and (max-width: 1300px) {
+        display: none;
+      }
+    }
+  }
+}
+
+.nav-item.active {
+  background-color: rgb(1, 38, 69); /* Highlight color for active route */
+}
+
+.nav-items {
+  padding-top: 40px;
+  background-color: #1E1E1E; /* Sidebar background color */
+  border-right: 1px solid #4CAF50; /* Sidebar border color */
+  height: 122%;
+  overflow-y: auto; /* Enable vertical scroll for small screens */
+  transition: width 0.3s ease;
+}
+
+.nav-items.minimized {
+  width: 70px;
+}

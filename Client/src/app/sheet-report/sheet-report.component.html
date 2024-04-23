@@ -1,0 +1,34 @@
+<div class="container-fluid bg-white rounded shadow" style="margin-top: 1%; padding-bottom: 2%;">
+  <h1 style="font-weight: bold; text-align: center; padding-top: 2%;">SHEET LIST</h1>
+  <hr>
+  <table class="table table-hover table-bordered" *ngIf="positionList">
+    <thead>
+      <tr>
+        <th scope="col">Employee</th>
+        <th scope="col">Position</th>
+        <th scope="col" *ngFor="let day of dates" [ngClass]="{ 'today-column': day.day === 'Today' }">{{ day.date }} ({{
+          day.day }})</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of userList; let i = index">
+        <ng-container *ngIf="user.role === 'user'">
+          <td>{{ user.username }}</td>
+          <td>{{ user.departmentName }}</td>
+          <td *ngFor="let day of dates" [ngClass]="{ 'today-column': day.day === 'Today' }">
+            <div *ngIf="isAttendanceMarked(user, day.date, 'present')">
+              <span class="glyphicon glyphicon-ok" style="color: green;">P</span>
+            </div>
+            <div *ngIf="isAttendanceMarked(user, day.date, 'absent')">
+              <span class="glyphicon glyphicon-remove" style="color: red;">A</span>
+            </div>
+            <div
+              *ngIf="!isAttendanceMarked(user, day.date, 'present') && !isAttendanceMarked(user, day.date, 'absent')">
+              ---
+            </div>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>

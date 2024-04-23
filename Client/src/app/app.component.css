@@ -1,0 +1,49 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container1 {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* .header {
+    width: 117%;
+  } */
+  
+  .main-container {
+    /* flex: 1; */
+    display: flex;
+  }
+  
+  .side-nav {
+    width: 350px;
+    min-width: 230px;
+    min-height: calc(100vh - 70px);
+    background-color: #113c60;
+    color: #fff;
+    box-shadow: 5px 5px 5px #939393;
+  }
+  
+  .main {
+    padding: 30px;
+    width: 100%;
+  }
+  
+  /* Add a media query for responsiveness */
+  @media only screen and (max-width: 1300px) {
+    .side-nav {
+      width: 100px;
+      min-width: 100px;
+    }
+  }
+  

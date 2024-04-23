@@ -1,0 +1,25 @@
+.shift-form-container {
+    border: 2px solid #343a40;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.shift-form-container h2 {
+    color: #343a40;
+}
+
+.shift-form-container label {
+    color: #343a40;
+}
+
+.shift-form-container button {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.alert {
+    padding: 15px;
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}

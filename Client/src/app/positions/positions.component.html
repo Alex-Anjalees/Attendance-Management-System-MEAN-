@@ -1,0 +1,100 @@
+<div class="container-fluid bg-white rounded shadow" style="margin-top: 1%; padding-bottom: 2%;">
+  <h1 style="font-weight: bold; text-align: center; padding-top: 2%;">Department Details</h1>
+  <hr>
+  <div class="container mt-5 position-form-container custom-form" *ngIf="showFormBoolean == true">
+    <h2>Add Position Details Form</h2>
+    <div class="text-right" style="margin-top: -4%;">
+      <button class="btn btn-secondary" (click)="goBack()" title="Back">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+    </div>
+    <div style="margin-top: 5%;">
+      <form [formGroup]="positionForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3" style="margin-top: 5%;">
+          <label for="departmentName" class="form-label">Department Name:</label>
+          <input type="text" id="departmentName" class="form-control" formControlName="departmentName" required>
+        </div>
+        <div class="mb-3">
+          <label for="departmentCode" class="form-label">Department Code:</label>
+          <input type="text" id="departmentCode" class="form-control" formControlName="departmentCode" required>
+        </div>
+        <button type="submit" class="btn btn-primary" title="Add Department">Submit</button>
+        <div *ngIf="showAlertMessage" class="alert alert-danger" style="margin-top: 1%;">
+          {{ message }}
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container mt-5 position-form-container custom-form" *ngIf="showUpdateFormBoolean == true">
+    <h2>Update Position Details Form</h2>
+    <div class="text-right" style="margin-top: -4%;">
+      <button class="btn btn-secondary" (click)="goBackUpdate()" title="Back">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+    </div>
+    <div style="margin-top: 5%;">
+      <form [formGroup]="positionForm" (ngSubmit)="onSubmitUpdate()">
+        <div class="mb-3" style="margin-top: 5%;">
+          <label for="departmentName" class="form-label">Department Name:</label>
+          <input type="text" id="departmentName" class="form-control" formControlName="departmentName" required>
+        </div>
+        <div class="mb-3">
+          <label for="departmentCode" class="form-label">Department Code:</label>
+          <input type="text" id="departmentCode" class="form-control" formControlName="departmentCode" required>
+        </div>
+        <button type="submit" class="btn btn-primary" title="Update Department">Update</button>
+        <div *ngIf="showAlertMessage" class="alert alert-danger" style="margin-top: 1%;">
+          {{ message }}
+        </div>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="isPositionList == true">
+    <div *ngIf="showAlertMessage" class="alert alert-success" style="margin-top: 1%;">
+      {{ message }}
+    </div>
+    <div style="margin-bottom: 1%; text-align: right;">
+      <button type="button" class="btn btn-success" (click)="addForm()" title="Add Department">+ Add New</button>
+    </div>
+    <div *ngIf="positionList.length > 0">
+      <table class="table table-hover table-bordered" *ngIf="positionList">
+        <thead>
+          <tr>
+            <th scope="col">SNo</th>
+            <th scope="col">Dept Code</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Added On</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let position of positionList | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; let i=index">
+            <th scope="row">{{ i+1 }}</th>
+            <td>{{ position.deptCode}}</td>
+            <td>{{ position.departmentName}}</td>
+            <td>{{ position.status}}</td>
+            <td>{{ position.addedOn | date:'yyyy-MM-dd' }}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-success mr-2" (click)="editPositionData(position)" title="Edit Department">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-danger" (click)="deletePositionData(position.id)" title="Delete Department">
+                  <i class="fas fa-trash-can"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-right" style="margin-top: 2%;">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      </div>
+    </div>
+    <div class="container bg-white rounded shadow" *ngIf="positionList.length == 0">
+      <h1 style="font-weight: bold; text-align: center; padding: 5%;">NO DATA FOUND</h1>
+    </div>
+  </div>
+</div>

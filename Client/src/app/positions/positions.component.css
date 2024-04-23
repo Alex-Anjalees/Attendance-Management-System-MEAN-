@@ -1,0 +1,33 @@
+.position-form-container {
+    border: 2px solid #343a40;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.position-form-container h2 {
+    color: #343a40;
+}
+
+.position-form-container label {
+    color: #343a40;
+}
+
+.position-form-container button {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.custom-form {
+    border: 1px solid #343a40;
+    /* Dark color for borders */
+    border-radius: 5px;
+    /* Optional: Add border radius for a rounded look */
+    padding: 15px;
+    /* Optional: Add padding for spacing */
+}
+
+.custom-form input,
+.custom-form button {
+    margin-bottom: 15px;
+    /* Optional: Add margin between inputs and buttons */
+}

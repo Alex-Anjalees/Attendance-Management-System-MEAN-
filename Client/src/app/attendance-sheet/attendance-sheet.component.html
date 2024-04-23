@@ -1,0 +1,136 @@
+<div class="container-fluid bg-white rounded shadow" style="margin-top: 1%; padding-bottom: 2%;">
+  <h1 style="font-weight: bold; text-align: center; padding-top: 2%;">ATTENDANCE SHEET LIST</h1>
+  <hr>
+  <div class="container-fluid bg-white rounded shadow" style="margin-top: 10%; padding-bottom: 1%;"
+    *ngIf="isAttendanceResponseList == true">
+    <div class="text-right" style="margin-top: -6%; padding-bottom: 2%; padding-top: 2%;">
+      <button class="btn btn-secondary" (click)="goBack()" title="Back">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+    </div>
+    <div *ngFor="let employee of notApprovedList" class="attendance-request">
+      <div class="request-info">
+        <p class="request-sentence">
+          <span class="username">{{ employee.username }}</span> requested attendance approval for
+          <span class="date">{{ employee.date }}</span> in the
+          <span class="department">{{ employee.departmentName }}</span> department.
+        </p>
+      </div>
+      <table class="attendance-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Status</th>
+            <th>Response</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ employee.username }}</td>
+            <td>{{ employee.date }}</td>
+            <td>{{ employee.shiftName }}</td>
+            <td>{{ employee.status }}</td>
+            <td>
+              <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" [(ngModel)]="selectedType"
+                (ngModelChange)="selectedResponse($event, employee)">
+                <option selected disabled>-Select-</option>
+                <option value="yes">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container bg-white rounded shadow" *ngIf="notApprovedList.length == 0">
+      <h1 style="font-weight: bold; text-align: center; padding: 5%;">NO USER REQUEST DATA FOUND</h1>
+    </div>
+  </div>
+
+  <div *ngIf="isAttendanceList == true">
+    <div class="container-fluid mt-3">
+      <div class="row">
+        <div class="col-md-2 mb-3">
+          <label class="mr-sm-2" for="inlineFormCustomSelect" style="font-weight: bold;">Select Department</label>
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" [(ngModel)]="selectedDepartment"
+            (ngModelChange)="selectedDepartmentData($event)">
+            <option selected disabled>-Select-</option>
+            <option *ngFor="let position of positionList" [value]="position.id">{{ position.departmentName }}</option>
+          </select>
+        </div>
+        <div class="col-md-2 mb-3" style="margin-top: 2%;">
+          <i class="fas fa-sync fa-2x" (click)="refreshUser()"></i>
+        </div>
+        <div class="col-md-6">
+          <div class="note-container text-left">
+            <h4>Note :</h4>
+            <ul>
+              <li>
+                <div class="instruction">
+                  <span class="tap-icon">👆</span> Single tap to mark <span style="color: green;">'Present'</span> in
+                  the Attendance checkbox.
+                </div>
+              </li>
+              <li>
+                <div class="instruction">
+                  <span class="tap-icon">👆👆</span> Double tap to mark <span style="color: red;">'Absent'</span> in the
+                  Attendance checkbox.
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary float-right" (click)="requestList()"
+            style="margin-bottom: 2%; margin-top: 8%;">
+            Approval Requests
+            <span class="badge badge-danger" *ngIf="notApprovedList.length != 0">{{notApprovedList.length}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="userList.length > 0">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Employee</th>
+            <th scope="col">Position</th>
+            <th scope="col" *ngFor="let day of dates" [ngClass]="{ 'today-column': day.day === 'Today' }">{{ day.date }}
+              ({{
+              day.day }})</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userList | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; let i=index">
+            <ng-container *ngIf="user.role === 'user'">
+              <td>{{ user.username }}</td>
+              <td>{{ user.departmentName }}</td>
+              <td *ngFor="let day of dates" [ngClass]="{ 'today-column': day.day === 'Today' }">
+                <input type="checkbox" [checked]="isAttendanceMarked(user, day.date, 'present')"
+                  (change)="toggleAttendance(user, day.date)">
+                <div
+                  *ngIf="!isAttendanceMarked(user, day.date, 'present') && !isAttendanceMarked(user, day.date, 'absent')"
+                  style="color: darkblue;">
+                  Not Marked</div>
+                <div *ngIf="isAttendanceMarked(user, day.date, '')" style="color: red;">
+                  Pending</div>
+                <div *ngIf="isAttendanceMarked(user, day.date, 'present')" style="color: green;">
+                  Marked Present</div>
+                <div *ngIf="isAttendanceMarked(user, day.date, 'absent')" style="color: red;">
+                  Marked Absent</div>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-right" style="margin-top: 2%;">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      </div>
+    </div>
+    <div class="container bg-white rounded shadow" *ngIf="userList.length == 0">
+      <h1 style="font-weight: bold; text-align: center; padding: 5%;">NO DATA FOUND</h1>
+    </div>
+  </div>
+</div>

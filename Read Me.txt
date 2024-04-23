@@ -1,0 +1,52 @@
+**Instructions for Employee Attendance Management System Project:**
+
+**Project Name:** Employee Attendance Management System
+
+**Versions:**
+- Angular: 17.0.10
+- Node: v20.11.0
+- NPM: 10.3.0
+
+**Setup:**
+
+Please ensure you have the required NPM packages installed before running the project by executing the command: 
+
+```
+npm install
+
+```
+
+**Client Side:**
+
+1. Run the following command for a development server:
+
+```
+ng serve or npm start
+
+```
+2. Navigate to `http://localhost:4200/` in your web browser. The application will automatically reload upon any changes to the source files.
+
+**Server Side:**
+
+1. Start the backend server with the command:
+
+```
+npm start
+
+```
+
+**MySQL Database:**
+
+- Database configuration is set up in the backend within the `config` folder in the `db.config.js` file (`app\config\db.config.js`).
+
+
+**Login Credentials**
+
+- Admin Side : 
+  username : Admin
+  password : 123456
+
+- Employee Side :
+  username : Employee1
+  password : 123456
+

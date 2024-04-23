@@ -1,0 +1,283 @@
+body, html {
+    height:70%;
+  }
+  
+  /*
+   * Off Canvas sidebar at medium breakpoint
+   * --------------------------------------------------
+   */
+  @media screen and (max-width: 992px) {
+  
+    .row-offcanvas {
+      position: relative;
+      -webkit-transition: all 0.25s ease-out;
+      -moz-transition: all 0.25s ease-out;
+      transition: all 0.25s ease-out;
+    }
+  
+    .row-offcanvas-left
+    .sidebar-offcanvas {
+      left: -33%;
+    }
+  
+    .row-offcanvas-left.active {
+      left: 33%;
+      margin-left: -6px;
+    }
+  
+    .sidebar-offcanvas {
+      position: absolute;
+      top: 0;
+      width: 33%;
+      height: 100%;
+    }
+  }
+  
+  /*
+   * Off Canvas wider at sm breakpoint
+   * --------------------------------------------------
+   */
+  @media screen and (max-width: 34em) {
+    .row-offcanvas-left
+    .sidebar-offcanvas {
+      left: -45%;
+    }
+  
+    .row-offcanvas-left.active {
+      left: 45%;
+      margin-left: -6px;
+    }
+    
+    .sidebar-offcanvas {
+      width: 45%;
+    }
+  }
+  
+  .card {
+      overflow:hidden;
+  }
+  
+  .card-body .rotate {
+      z-index: 8;
+      float: right;
+      height: 100%;
+  }
+  
+  .card-body .rotate i {
+      color: rgba(20, 20, 20, 0.15);
+      position: absolute;
+      left: 0;
+      left: auto;
+      right: -10px;
+      bottom: 0;
+      display: block;
+      -webkit-transform: rotate(-44deg);
+      -moz-transform: rotate(-44deg);
+      -o-transform: rotate(-44deg);
+      -ms-transform: rotate(-44deg);
+      transform: rotate(-44deg);
+  }
+  
+
+  .tile-progress {
+    background-color: #303641;
+    color: #fff;
+    }
+    .tile-progress {
+    background: #00a65b;
+    color: #fff;
+    margin-bottom: 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    }
+    .tile-progress .tile-header {
+    padding: 15px 20px;
+    padding-bottom: 40px;
+    }
+    .tile-progress .tile-progressbar {
+    height: 2px;
+    background: rgba(0,0,0,0.18);
+    margin: 0;
+    }
+    .tile-progress .tile-progressbar span {
+    background: #fff;
+    }
+    .tile-progress .tile-progressbar span {
+    display: block;
+    background: #fff;
+    width: 0;
+    height: 100%;
+    -webkit-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+    -moz-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+    -o-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+    transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+    }
+    .tile-progress .tile-footer {
+    padding: 20px;
+    text-align: right;
+    background: rgba(0,0,0,0.1);
+    -webkit-border-radius: 0 0 3px 3px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 0 0 3px 3px;
+    -moz-background-clip: padding;
+    border-radius: 0 0 3px 3px;
+    background-clip: padding-box;
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+    }
+    .tile-progress.tile-red {
+    background-color: #f56954;
+    color: #fff;
+    }
+    .tile-progress {
+    background-color: #cd14fc;
+    color: #fff;
+    }
+    .tile-progress.tile-blue {
+    background-color: #0073b7;
+    color: #fff;
+    }
+    .tile-progress.tile-aqua {
+    background-color: #00c0ef;
+    color: #fff;
+    }
+
+
+
+    /* Employee Dashboard  */
+
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .dashboard-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .employee-details {
+      margin-bottom: 20px;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .value {
+      color: #333;
+    }
+
+    .member-since {
+      font-size: 0.8em;
+      color: #777;
+    }
+
+    /*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+.progress {
+  width: 150px;
+  height: 150px;
+  background: none;
+  position: relative;
+}
+
+.progress::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid #eee;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progress>span {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.progress .progress-left {
+  left: 0;
+}
+
+.progress .progress-bar {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border-width: 6px;
+  border-style: solid;
+  position: absolute;
+  top: 0;
+}
+
+.progress .progress-left .progress-bar {
+  left: 100%;
+  border-top-right-radius: 80px;
+  border-bottom-right-radius: 80px;
+  border-left: 0;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+}
+
+.progress .progress-right {
+  right: 0;
+}
+
+.progress .progress-right .progress-bar {
+  left: -100%;
+  border-top-left-radius: 80px;
+  border-bottom-left-radius: 80px;
+  border-right: 0;
+  -webkit-transform-origin: center right;
+  transform-origin: center right;
+}
+
+.progress .progress-value {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.rounded-lg {
+  border-radius: 1rem;
+}
+
+.text-gray {
+  color: #aaa;
+}
+
+div.h4 {
+  line-height: 1rem;
+}

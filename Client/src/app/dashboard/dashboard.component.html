@@ -1,0 +1,435 @@
+<div class="container-fluid" id="main" *ngIf="role == 'admin'">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col main pt-5 mt-1">
+            <div style="text-align: center;">
+                <h2 class="display-4 d-none d-sm-block" style="font-weight: bold;">
+                    Employee Attendance Management System
+                </h2>
+                <h1>{{ currentDate }}</h1>
+            </div>
+            <p class="lead d-none d-sm-block">{{content}} Admin Dashboard</p>
+            <div class="row mb-3">
+                <div class="col-xl-4 col-sm-6 py-2">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h3 class="text-uppercase">TOTAL EMPLOYEES</h3>
+                            <h1 class="display-4">{{userListLength}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-sm-6 py-2">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h3 class="text-uppercase">Available Schedules</h3>
+                            <h1 class="display-4">{{shiftListLength}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-sm-6 py-2">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fas fa-building fa-4x"></i>
+                            </div>
+                            <h3 class="text-uppercase">Total Departments</h3>
+                            <h1 class="display-4">{{positionListLength}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="margin-bottom: 2%; text-align: center;">
+                <div class="col-sm-2">
+                    <div style="font-weight: bolder; text-align: left;">
+                        Select Attendance
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div style="font-weight: bolder; text-align: left;">
+                        :
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div>
+                        <button type="button" class="btn btn-success" (click)="getAttendanceForToday()"
+                            title="Today">Today</button>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div>
+                        <button type="button" class="btn btn-success" (click)="getAttendanceForThisWeek()"
+                            title="Week">Week</button>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
+                            [(ngModel)]="selectedMonthOption" (ngModelChange)="onMonthSelect($event)">
+                            <option selected disabled>-Select-Month-</option>
+                            <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <input type="date" class="form-control" id="date" required name="date"
+                            [(ngModel)]="selectedDate" (ngModelChange)="onDateSelect($event)">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <input type="week" class="form-control" id="week" required name="week"
+                            [(ngModel)]="selectedWeek" (ngModelChange)="onWeekSelect($event)">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 1%; text-align: center;">
+                <div class="col-sm-2">
+                    <div style="font-weight: bolder; text-align: left;">
+                        Select Date Range
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div style="font-weight: bolder; text-align: left;">
+                        :
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" class="form-control" id="startDate" required name="startDate"
+                            [(ngModel)]="startDate">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div>
+                        <label for="endDate">End Date:</label>
+                        <input type="date" class="form-control" id="endDate" required name="endDate"
+                            [(ngModel)]="endDate">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div style="margin-top: 16%;">
+                        <button type="button" class="btn btn-success" title="Get Data"
+                            (click)="getAttendanceForSelectedRange()">Get Data</button>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="col-md-2 mb-3" style="margin-top: 16%;">
+                        <i class="fas fa-sync fa-2x" (click)="getAttendanceForToday()"></i>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="tile-progress tile-primary">
+                            <div class="tile-header">
+                                <h3>ON TIME </h3>
+                                <span> Count : {{onTimeCount.length}}</span>
+                            </div>
+                            <div class="tile-progressbar">
+                                <span data-fill="65.5%" [style.width.%]="onTimePercentage"></span>
+                            </div>
+                            <div class="tile-footer">
+                                <h4>
+                                    <span class="pct-counter">{{onTimePercentage}}</span>% increase
+                                </h4>
+                                <span>An employee who consistently demonstrates outstanding attendance is punctual to
+                                    work.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="tile-progress tile-red">
+                            <div class="tile-header">
+                                <h3>PRESENT</h3>
+                                <span> Count: {{ presentAttendanceList.length }}</span>
+                            </div>
+                            <div class="tile-progressbar">
+                                <span data-fill="23.2%" [style.width.%]="presentPercentage"></span>
+                            </div>
+                            <div class="tile-footer">
+                                <h4>
+                                    <span class="pct-counter">{{presentPercentage}}</span>% increase
+                                </h4>
+                                <span> Use this attendance policy to mitigate absenteeism and tardiness, tardy in the
+                                    workplace.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="tile-progress tile-blue">
+                            <div class="tile-header">
+                                <h3>ABSENT</h3>
+                                <span> Count: {{ absentAttendanceList.length }}</span>
+                            </div>
+                            <div class="tile-progressbar">
+                                <span data-fill="78%" [style.width.%]="absentPercentage"></span>
+                            </div>
+                            <div class="tile-footer">
+                                <h4>
+                                    <span class="pct-counter">{{absentPercentage}}</span>% increase
+                                </h4>
+                                <span>Employees will receive an occurrence for any unapproved absence, tardy, tardiness
+                                    or missed
+                                    clock</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="tile-progress tile-aqua">
+                            <div class="tile-header">
+                                <h3>LATE</h3>
+                                <span> Count: {{ lateCount.length }}</span>
+                            </div>
+                            <div class="tile-progressbar">
+                                <span [style.width.%]="latePercentage"></span>
+                            </div>
+                            <div class="tile-footer">
+                                <h4>
+                                    <span class="pct-counter">{{ latePercentage }}</span>% increase
+                                </h4>
+                                <span>Timely attendance is not just a reflection of an employee's commitment, occurrence
+                                    to their
+                                    mission</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a id="features"></a>
+            <hr>
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card">
+                        <img class="card-img-top img-fluid"
+                            src="https://blog.cdn.cmarix.com/blog/wp-content/uploads/2022/05/Attendance-Management-System.png"
+                            alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Attendance Policy</h4>
+                            <p class="card-text">An attendance policy lists rules and guidelines to track, monitor and
+                                enforce employee adherence to scheduled work times. The goals of an attendance policy:
+                                Establish procedures for reporting absences and tardiness. Standardize requests for
+                                planned and last-minute time off. Employee attendance means an employee showing up for
+                                and fully working their scheduled shift for the day.</p>
+                            <a href="https://www.aacpa.ac.in/uploads/gallery/media/rules.pdf"
+                                class="btn btn-primary">Know
+                                More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <h1>Schedules</h1>
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Shift</th>
+                                    <th>Time In</th>
+                                    <th>Time Out</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of shiftList; let i=index">
+                                    <td>{{ user.shift}}</td>
+                                    <td>{{ user.timeIn}}</td>
+                                    <td>{{ user.timeOut}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h1>Department Employee Count</h1>
+                        <table class="table align-middle mb-0 bg-white table-hover table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col">Department ID</th>
+                                    <th scope="col">Department Name</th>
+                                    <th scope="col">Employee Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let department of departmentEmployeeCount | keyvalue">
+                                    <td>{{ department.value.deptCode }}</td>
+                                    <td>{{ department.value.name }}</td>
+                                    <td>{{ department.value.count }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="role == 'user' && showStudentDashboard == true">
+    <div class="row mb-3">
+        <div class="col-xl-4 col-sm-6 py-2">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body bg-success">
+                    <div class="rotate">
+                        <i class="fa fa-user fa-4x"></i>
+                    </div>
+                    <h3 class="text-uppercase">Employee Id</h3>
+                    <h1 class="display-4">{{userListById.id}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 py-2">
+            <div class="card text-white bg-danger h-100">
+                <div class="card-body bg-danger">
+                    <div class="rotate">
+                        <i class="fa fa-list fa-4x"></i>
+                    </div>
+                    <h3 class="text-uppercase">Department</h3>
+                    <h1 class="display-4">{{userListById.departmentName}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 py-2">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body bg-info">
+                    <div class="rotate">
+                        <i class="fas fa-building fa-4x"></i>
+                    </div>
+                    <h3 class="text-uppercase">Shift Schedule</h3>
+                    <h1 class="display-4">{{userListById.shiftName}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container py-7 bg-white rounded-lg shadow" style="padding: 5%;">
+        <h1 style="font-weight: bolder; text-align: center; color: #333; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+            {{content}} </h1>
+        <h1 style="font-weight: bolder; text-align: center; color: #333; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+            {{ currentDate }} </h1>
+    </div>
+    <div class="container py-7 bg-white rounded-lg shadow"
+        style="margin-top: 1%; padding-bottom: 2%; margin-bottom: 1%;">
+        <h1 style="font-weight: bolder;"> Today's Attendance Status :</h1>
+        <h2 [style.color]="todayAttendanceStatusColor" style="font-weight: bold; text-align: center;">{{
+            todayAttendanceStatus }}</h2>
+        <div *ngIf="showMarkAttendanceBoolean == true">
+            <h2 style="font-weight: bold; text-align: center;">Mark Attendance :
+                <button type="button" class="btn btn-primary" (click)="showMarkAttendance()">Mark Attendance</button>
+            </h2>
+            <div>
+                (Note: Once you mark attendance, it cannot be changed for Today)
+            </div>
+        </div>
+    </div>
+    <div class="container py-7 bg-white rounded-lg shadow">
+        <h1 style="font-weight: bolder;"> Weekly Attendance Summary :</h1>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 mb-4">
+                <div class="bg-white rounded-lg p-5 shadow">
+                    <h2 class="h6 font-weight-bold text-center mb-4">Present progress</h2>
+                    <div class="progress mx-auto" data-value='70'>
+                        <span class="progress-left">
+                            <span class="progress-bar border-primary"></span>
+                        </span>
+                        <span class="progress-right">
+                            <span class="progress-bar border-primary"></span>
+                        </span>
+                        <div
+                            class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                            <div class="h2 font-weight-bold">{{presentWeeklyPercentage}}<sup class="small">%</sup></div>
+                        </div>
+                    </div>
+                    <div class="row text-center mt-4">
+                        <div class="col-6 border-right">
+                            <div class="h4 font-weight-bold mb-0"></div><span class="small text-gray"></span>
+                        </div>
+                        <div class="col-6">
+                            <div class="h4 font-weight-bold mb-0">{{presentCount}}</div><span
+                                class="small text-gray">Present Count</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 mb-4">
+                <div class="bg-white rounded-lg p-5 shadow">
+                    <h2 class="h6 font-weight-bold text-center mb-4">Absent Progress</h2>
+                    <div class="progress mx-auto" data-value='70'>
+                        <span class="progress-left">
+                            <span class="progress-bar border-danger"></span>
+                        </span>
+                        <span class="progress-right">
+                            <span class="progress-bar border-danger"></span>
+                        </span>
+                        <div
+                            class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                            <div class="h2 font-weight-bold">{{absentWeeklyPercentage}}<sup class="small">%</sup></div>
+                        </div>
+                    </div>
+                    <div class="row text-center mt-4">
+                        <div class="col-6 border-right">
+                            <div class="h4 font-weight-bold mb-0"></div><span class="small text-gray"></span>
+                        </div>
+                        <div class="col-6">
+                            <div class="h4 font-weight-bold mb-0">{{absentCount}}</div><span
+                                class="small text-gray">Absent Count</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container py-7 bg-white rounded-lg shadow" style="margin-top: 1%;">
+        <h1 style="font-weight: bolder;"> Notifications : :</h1>
+        <h4 style="font-weight: bold; text-align: center;">Important Announcements or Notifications from HR or
+            Managements</h4>
+        <div class="label">Member of the Company Since :</div>
+        <div class="value">{{userListById.memberSince | date:'yyyy-MM-dd' }}</div>
+        <div class="member-since">(Member Since)</div>
+    </div>
+</div>
+<div class="container mt-5" *ngIf="showMarkAttendanceForm == true">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Mark Attendance</h5>
+                    <div class="text-right" style="margin-top: -7%;">
+                        <button class="btn btn-secondary" (click)="goBackUpdate()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form #attendanceForm="ngForm" (ngSubmit)="submitForm(attendanceForm)">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" class="form-control" id="date" required [(ngModel)]="formData.date"
+                                name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Attendance Status</label>
+                            <select class="form-control" id="status" required [(ngModel)]="formData.status"
+                                name="status">
+                                <option value="present">Present</option>
+                                <option value="absent">Absent</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div *ngIf="showAlertMessage" class="alert alert-danger" style="margin-top: 2%;">
+                            {{ message }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="container-fluid">
+    <p class="text-right small">©2023-2024 Alex Anjalees</p>
+</footer>
